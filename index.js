@@ -1,5 +1,3 @@
-// const {onRequest} = require("firebase-functions/v2/https");
-// const logger = require("firebase-functions/logger");
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -22,13 +20,13 @@ app.post("/payment/create", async (req, res)=>{
     if(total > 0) {
         // console.log("payment recived", total);
         // res.send(total);
-        const paymentIntent = await stripe.paymentIntent.create({
+        const paymentIntent = await stripe.paymentIntents.create ({
             amount: total,
             currency: "usd",
         });
         // console.log(paymentIntent);
         res.status(201).json({
-            clientSecret: paymentIntent.client_secrt,
+            clientSecret: paymentIntent.client_secret,
         });
     }else {
         res.status(403).json({
@@ -42,6 +40,6 @@ app.listen(5001, (err)=>{
     console.log("Amazon Server Running on PORT: 5001, http://localhost:5001");
 })
 
-// exports.api = onRequest(app)
+
 
 
